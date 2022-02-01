@@ -6,23 +6,51 @@ Here are my recommendations:
 
 * **TB6612FNG**
 	At arount the same price as the L298, [these modules](https://shop.pimoroni.com/products/tb6612fng-dual-motor-driver-carrier
-) have a peak current of 3.2A. ... making them a great to pair with Pololu Micro Motors / N20 Motors. 
+) have a higher peak current of 3.2A, making them a great to pair with Pololu Micro Motors / N20 Motors. 
 	
 * **VNH30x Series**
 	Originally designed for powersteering and other automotive uses, the is a great option for large(r) motors. Each chip can support up to 15A and 30A peak loads on one channel. Additionally these chips have an analog output pin called **CS**, or **C**urrent **S**ense. You can read the voltage on this pin to see how much current each motor uses. This will be supported in later versions of the firmware. There are a few breakout boards on the market, such as [this one](https://www.pololu.com/product/707) by Pololu.
 
 Motorhead is also available as a package for robot-block, offering a plug-and-play ROS experience.
 
-
 ## I2C Registers
+#### Mode Configuration
+| Register | Description | R/W |
+| ----------- | ----------- |----------- |
+| 0xFF | I2C Mode | R/W 
+| 0xFD | UART Mode | R/W 
+#### Pin Configuration
+| Register | Description | R/W |
+| ----------- | ----------- | ----------- |
+| 0x00 | Left Motor PWM | R/W |
+| 0x01| Left Motor A | R/W |
+| 0x02| Left Motor B | R/W |
+| 0x03| Left Encoder A | R/W |
+| 0x04| Left Encoder B | R/W |
+| 0x05| Right Motor A | R/W |
+| 0x06| Right Motor B | R/W |
+| 0x07| Right Motor PWM | R/W |
+| 0x0A| Right Encoder A | R/W |
+| 0x0B| Right Encoder B | R/W |
 
-| Register      | Description |
-| ----------- | ----------- |
-|     | Title       |
-| Paragraph   | Text        |
+#### Motors
 
+##### Motor Left
+| Register | Description | R/W |
+| ----------- | ----------- | ----------- |
+| 0x10 | Speed  | R/W |
+| 0x11| Direction | R/W |
+| 0x12| Go |W |
 
+##### Motor Right
+| Register | Description |  R/W |
+| ----------- | ----------- | ----------- |
+| 0x20 | Speed  | R/W |
+| 0x21| Direction | R/W |
+| 0x22| Go |W |
 
-CMD arduino-cli upload --port /dev/ttyAMA0--fqbn arduino:avr:pro:cpu=8MHzatmega328 /usr/deploy/arduino/arduino.ino && \
-    i2cdetect -y -r 0 && \
-    python motorhead.py
+#### Encoders
+| Register | Description |  R/W |
+| ----------- | ----------- | ----------- |
+| 0x30| Count Left  | R/W |
+| 0x31| Count Right  |  R |
