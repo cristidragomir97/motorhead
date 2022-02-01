@@ -12,3 +12,17 @@ Here are my recommendations:
 	Originally designed for powersteering and other automotive uses, the is a great option for large(r) motors. Each chip can support up to 15A and 30A peak loads on one channel. Additionally these chips have an analog output pin called **CS**, or **C**urrent **S**ense. You can read the voltage on this pin to see how much current each motor uses. This will be supported in later versions of the firmware. There are a few breakout boards on the market, such as [this one](https://www.pololu.com/product/707) by Pololu.
 
 Motorhead is also available as a package for robot-block, offering a plug-and-play ROS experience.
+
+
+## I2C Registers
+
+| Register      | Description |
+| ----------- | ----------- |
+|     | Title       |
+| Paragraph   | Text        |
+
+
+
+CMD arduino-cli upload --port /dev/ttyAMA0--fqbn arduino:avr:pro:cpu=8MHzatmega328 /usr/deploy/arduino/arduino.ino && \
+    i2cdetect -y -r 0 && \
+    python motorhead.py
