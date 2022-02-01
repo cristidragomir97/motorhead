@@ -13,6 +13,29 @@ Here are my recommendations:
 
 Motorhead is also available as a package for robot-block, offering a plug-and-play ROS experience.
 
+
+## Variables
+To work with a variety of different boards, some specifics need to be configured using variables. 
+
+### Build Variables 
+To compile the arduino sketch at build-time, some information about your specific microcontroller is needed. 
+Build variables can be defined in `balena.yml` inside the `.balena` folder.  
+
+| Variable | Description | Example | 
+| ----------- | ----------- |----------- |
+| `ARDUINO_CORE` | The microcontroller family your board is based on | `arduino:avr` |
+| `ARDUINO_FQBN` | Board identification as Follows the following naming convention. `VENDOR:ARCHITECTURE:BOARD_ID[:MENU_ID=OPTION_ID[,MENU2_ID=OPTION_ID ...]]` | `arduino:avr:pro:cpu=8MHzatmega328` |
+
+### Runtime Variables
+These variables can be defined on the dashboard, or in the docker compose. 
+
+| Variable | Description | Example | 
+| ----------- | ----------- |----------- |
+| `AVRDUDE_CPU` | Name of the microcontroller your board is based on | `atmega328p` |
+| `MONITOR_BAUD` | Baud rate for miniterm (after flashing, the arduino service opens a serial terminal for monitoring) | `9600` |
+| `SERIAL_PORT` | Serial port your board is connected to. | `/dev/ttyUSB0` |
+
+
 ## I2C Registers
 #### Mode Configuration
 | Register | Description | R/W |
