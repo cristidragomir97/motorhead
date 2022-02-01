@@ -24,7 +24,7 @@ Build variables can be defined in `balena.yml` inside the `.balena` folder.
 | Variable | Description | Example | 
 | ----------- | ----------- |----------- |
 | `ARDUINO_CORE` | The microcontroller family your board is based on | `arduino:avr` |
-| `ARDUINO_FQBN` | Board identification as Follows the following naming convention. `VENDOR:ARCHITECTURE:BOARD_ID[:MENU_ID=OPTION_ID[,MENU2_ID=OPTION_ID ...]]` | `arduino:avr:pro:cpu=8MHzatmega328` |
+| `ARDUINO_FQBN` | Board identification ID that follows this naming convention: `VENDOR:ARCHITECTURE:BOARD_ID[:MENU_ID=OPTION_ID[,MENU2_ID=OPTION_ID ...]]` | `arduino:avr:pro:cpu=8MHzatmega328` |
 
 ### Runtime Variables
 These variables can be defined on the dashboard, or in the docker compose. 
