@@ -1,0 +1,20 @@
+version: '2'
+
+services: 
+  arduino: 
+      privileged: true
+      build: arduino/
+      environment:
+
+        - AVRDUDE_CPU=atmega328p
+        - MONITOR_BAUD=9600
+        - ROSSERIAL_ARDUINO=0 
+        - SERIAL_PORT=/dev/ttyUSB0
+  motorhead:
+    build: motorhead/
+    labels:
+      io.balena.features.kernel-modules: '1'
+      io.balena.features.balena-socket: 1
+    devices:
+      - "/dev:/dev"
+

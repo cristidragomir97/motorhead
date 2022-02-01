@@ -114,39 +114,30 @@ void encoderReset(int *encoderCount)
   *encoderCount = 0;
 }
 
-void requestEvent(int bytes) {
+void requestEvent() {
     char command = Wire.read();
- 
-    if(command == 'd'){
-      char index = Wire.read();
-      char dir = Wire.read();
-      char speed = Wire.read();
-      motorDrive(index, dir, speed);
-    }
-    else if (command == 'b') {
-      char index = Wire.read();
-      motorBrake(index);
-    }
-    else if (command == 's') {
-      char index = Wire.read();
-      motorStop(index);
-    }
-    else if (command == 'r') {
-      encoderReset(&counterLeft);
-      encoderReset(&counterRight);
-    }
-    else if (command == 'e') {
-      char index = Wire.read();
-     
-    }
+    Serial.print("Request: ");
+    Serial.println(command);
+  
+}
+
+void receiveEvent(int bytes) {
+    Serial.print("Receive: ");
+    Serial.println(bytes);
+  
 }
 
 
-
 void setup(){
+  
+  Wire.begin(0x76);            
+  Wire.onRequest(requestEvent); // respond to requests from the master nodde via read8
+  Wire.onReceive(receiveEvent); // receive data from the master node via write8
 
-  Wire.begin(0x5D);                // join i2c bus with address #2 
-  Wire.onRequest(requestEvent); // register event 
+  Serial.begin(9600);
+  delay(2000);
+  Serial.println("Arduino is ready");
+
 
   pinMode(RIGHT_PWM, OUTPUT);
   pinMode(RIGHT_IN_A, OUTPUT);
@@ -162,7 +153,7 @@ void setup(){
 
 void loop()
 {
-  encoderRead(RIGHT_ENC_A, RIGHT_ENC_B, &lastRightState, &counterRight);
-  encoderRead(LEFT_ENC_A, LEFT_ENC_B, &lastLeftState, &counterLeft);
+  //encoderRead(RIGHT_ENC_A, RIGHT_ENC_B, &lastRightState, &counterRight);
+  //encoderRead(LEFT_ENC_A, LEFT_ENC_B, &lastLeftState, &counterLeft);
 }
 
