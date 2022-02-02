@@ -1,5 +1,4 @@
-FROM python:3.8-slim-buster 
-RUN apt-get update && apt-get install -y python3-pip
-RUN pip3 install smbus2
-
+FROM python:3.9-slim-bullseye 
+RUN pip install smbus2
+COPY motorhead.py motorhead.py
 CMD python3 motorhead.py
