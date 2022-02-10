@@ -2,14 +2,20 @@ version: '2'
 
 services: 
   arduino: 
+      image: cristidragomir97/arduino-block:arm64
       privileged: true
       restart: always
-      build: arduino/
       environment:
+        - REPO="https://github.com/cristidragomir97/motorhead"
+        - SKETCH_FOLDER=/firmware
         - AVRDUDE_CPU=atmega328p
         - MONITOR_BAUD=9600
-        - ROSSERIAL_ARDUINO=0 
-        - SERIAL_PORT=/dev/ttyUSB0
+        - SERIAL_PORT=/dev/ttyAMA0
+        - ARDUINO_FQBN=arduino:avr:pro:cpu=8MHzatmega328
+        - RESET_PIN=18
+      labels:
+        io.balena.features.dbus: '1'
+        
   motorhead:
     privileged: true
     build: motorhead/
