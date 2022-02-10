@@ -6,33 +6,22 @@
 #define RIGHT 0 
 #define LEFT 1
 
-#define RIGHT_PWM 9
-#define RIGHT_IN_A 3
-#define RIGHT_IN_B 4
-#define RIGHT_ENC_A 7
-#define RIGHT_ENC_B 13
-
-#define LEFT_PWM 5
-#define LEFT_IN_1 8
-#define LEFT_IN_2 6
-#define LEFT_ENC_A 10
-#define LEFT_ENC_B 11
-
 int right_pwm, right_in_a, right_in_b, right_enc_a, right_enc_b;
 int left_pwm, left_in_a, left_in_b, left_enc_a, left_enc_b; 
 int right_speed, right_direction, right_state;
 int left_speed, left_direction, left_state;
 
 //Standby
-int pinSTBY = 2;
+int pinSTBY = 6;
 
 bool lastLeftState = false;
 bool lastRightState = false;
 int counterRight = 0;
 int counterLeft = 0;
 
-void motorDrive(boolean motorNumber, boolean motorDirection, int motorSpeed)
-{
+void motorDrive(boolean motorNumber, boolean motorDirection, int motorSpeed){
+  Serial.println("motor_number:" + String(motorNumber) +  ", motor_direction: " + String(motorDirection) +  ", motor_speed: " +  String(motorSpeed));
+
   /*
   This Drives a specified motor, in a specific direction, at a specified speed:
     - motorNumber: RIGHT or LEFT ---> Motor 1 or Motor 2
@@ -65,10 +54,7 @@ void motorDrive(boolean motorNumber, boolean motorDirection, int motorSpeed)
     analogWrite(left_pwm, motorSpeed);
   }
    
- 
 
-//Finally , make sure STBY is disabled - pull it HIGH
-  digitalWrite(pinSTBY, HIGH);
 
 }
 
@@ -79,9 +65,9 @@ This "Short Brake"s the specified motor, by setting speed to zero
 */
 
   if (motorNumber == RIGHT)
-    analogWrite(RIGHT_PWM, 0);
+    analogWrite(right_pwm, 0);
   else
-    analogWrite(LEFT_PWM, 0);
+    analogWrite(left_pwm, 0);
    
 }
 
@@ -126,17 +112,18 @@ void requestEvent() {
 }
 
 void configurePins(int index, int value) {
+
    if (index == 0x00) {
         pinMode(value, OUTPUT);
         right_in_a = value;
-        Serial.println("> pins > Right IN A: " + String(value));
+        Serial.println("> pins > Right In B: " + String(value));
 
-    } else if (index == 0x01) {
+    else if (index == 0x01) 
         pinMode(value, OUTPUT);
         right_in_b = value;
-        Serial.println("> pins > Right IN B: " + String(value));
+        Serial.println("> pins > Right In B: " + String(value));
 
-    } else if (index == 0x02) {
+    else if (index == 0x02) {
         pinMode(value, OUTPUT);
         right_pwm = value;
         Serial.println("> pins > Right PWM: " + String(value));
@@ -178,6 +165,12 @@ void configurePins(int index, int value) {
     } 
 }
 
+void pin(int * pin, int  value, String msg ){
+  pinMode(value, OUTPUT);
+  &pin = value;
+  Serial.println(msg + String(value));
+}
+
 void setMotors(int index, int value) {
   if (index == 0x10) {
     right_speed = value;
@@ -200,7 +193,7 @@ void setMotors(int index, int value) {
     Serial.println("> motors > Left Direction: " + String(value));
 
   } else if (index == 0x22) {
-    right_state = value;
+    left_state = value;
     Serial.println("> motors > Left State: " + String(value));
   }
 }
@@ -209,6 +202,7 @@ void updateMotors(){
   if (right_state == 1){ 
     if(right_direction == 1){
       motorDrive(RIGHT, CW, right_speed);
+
     }else{
       motorDrive(RIGHT, CCW, right_speed);
     }
@@ -237,6 +231,11 @@ void receiveEvent(int bytes) {
 }
 
 void setup(){
+  pinMode(pinSTBY, OUTPUT);
+
+
+//Finally , make sure STBY is disabled - pull it HIGH
+  digitalWrite(pinSTBY, HIGH);
   Serial.begin(9600);
   
   Wire.begin(0x76);            
@@ -249,6 +248,7 @@ void setup(){
 void loop()
 {
   updateMotors();
+  delay(1/30);
   //encoderRead(RIGHT_ENC_A, RIGHT_ENC_B, &lastRightState, &counterRight);
   //encoderRead(LEFT_ENC_A, LEFT_ENC_B, &lastLeftState, &counterLeft);
 }

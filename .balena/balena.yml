@@ -1,4 +1,0 @@
-build-variables:
-    global:
-        - ARDUINO_CORE=arduino:avr
-        - ARDUINO_FQBN=arduino:avr:pro:cpu=8MHzatmega328
