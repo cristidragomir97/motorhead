@@ -165,12 +165,6 @@ void configurePins(int index, int value) {
     } 
 }
 
-void pin(int * pin, int  value, String msg ){
-  pinMode(value, OUTPUT);
-  &pin = value;
-  Serial.println(msg + String(value));
-}
-
 void setMotors(int index, int value) {
   if (index == 0x10) {
     right_speed = value;
@@ -248,7 +242,7 @@ void setup(){
 void loop()
 {
   updateMotors();
-  delay(1/30);
+  delay(1/60);
   //encoderRead(RIGHT_ENC_A, RIGHT_ENC_B, &lastRightState, &counterRight);
   //encoderRead(LEFT_ENC_A, LEFT_ENC_B, &lastLeftState, &counterLeft);
 }
