@@ -118,12 +118,12 @@ void configurePins(int index, int value) {
         right_in_a = value;
         Serial.println("> pins > Right In B: " + String(value));
 
-    else if (index == 0x01) 
+   } else if (index == 0x01) 
         pinMode(value, OUTPUT);
         right_in_b = value;
         Serial.println("> pins > Right In B: " + String(value));
 
-    else if (index == 0x02) {
+    } else if (index == 0x02) {
         pinMode(value, OUTPUT);
         right_pwm = value;
         Serial.println("> pins > Right PWM: " + String(value));
