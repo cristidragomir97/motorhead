@@ -18,7 +18,7 @@ services:
         
   motorhead:
     privileged: true
-    build: motorhead/
+    build: .
     labels:
       io.balena.features.kernel-modules: '1'
       io.balena.features.balena-socket: 1
