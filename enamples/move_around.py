@@ -13,7 +13,7 @@ if __name__ == "__main__":
         'right_enc_b': 11,
         'left_a': 7,
         'left_b': 8,
-        'left_pwm': 9,
+        'left_pwm': 6,
         'left_enc_a': 12,
         'left_enc_b': 13
     }

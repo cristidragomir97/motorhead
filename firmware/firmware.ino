@@ -12,7 +12,7 @@ int right_speed, right_direction, right_state;
 int left_speed, left_direction, left_state;
 
 //Standby
-int pinSTBY = 6;
+int pinSTBY = 9;
 
 bool lastLeftState = false;
 bool lastRightState = false;
