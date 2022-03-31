@@ -1,0 +1,12 @@
+{
+    "name": "motorhead",
+    "info": "I2C/Serial Motor Driver",
+    "dependencies": [
+        {
+            "type": "pip3",
+            "package":"smbus2"            
+        }
+    ],
+    "callback": "update",
+    "ros_message": ["geometry_msgs.msg", "Twist"]
+}
