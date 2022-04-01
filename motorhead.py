@@ -27,21 +27,7 @@ MOTOR_LEFT_GO = 0x22
 
 ADDRESS = 0x76
 
-def write_word(bus, reg, data):
-    bus.write_word_data(ADDRESS, reg, data)
 
-def init_pins(bus, pins):
-    write_word(bus, PIN_RIGHT_A, pins['right_a'])
-    write_word(bus, PIN_RIGHT_B, pins['right_b'])
-    write_word(bus, PIN_RIGHT_PWM, pins['right_pwm'])
-    write_word(bus, PIN_RIGHT_ENC_A, pins['right_enc_a'])
-    write_word(bus, PIN_RIGHT_ENC_B, pins['right_enc_b'])
-    
-    write_word(bus, PIN_LEFT_A, pins['left_a'])
-    write_word(bus, PIN_LEFT_B, pins['left_b'])
-    write_word(bus, PIN_LEFT_PWM, pins['left_pwm'])
-    write_word(bus, PIN_LEFT_ENC_A, pins['left_enc_a'])
-    write_word(bus, PIN_LEFT_ENC_B, pins['left_enc_b'])
 
 class motorhead():
      
@@ -51,32 +37,47 @@ class motorhead():
         
         try:
             self.bus = smbus2.SMBus(1)
-            init_pins(self.bus, pins)
+            self.init_pins(self.bus, pins)
    
             logg(__name__, "INFO", "Motors successfullly initialised")
         except Exception as e:
-            logg(__name__, "ERROR", "Exception initialisitng Motorhead Motor Driver {}".format(e))
+            logg(__name__, "ERROR", "Exception initialisitng Motorhead Motor Driver {}".format)
 
+    def write_word(self, bus, reg, data):
+        bus.write_word_data(ADDRESS, reg, data)
+
+    def init_pins(self, bus, pins):
+        self.write_word(bus, PIN_RIGHT_A, pins['right_a'])
+        self.write_word(bus, PIN_RIGHT_B, pins['right_b'])
+        self.write_word(bus, PIN_RIGHT_PWM, pins['right_pwm'])
+        self.write_word(bus, PIN_RIGHT_ENC_A, pins['right_enc_a'])
+        self.write_word(bus, PIN_RIGHT_ENC_B, pins['right_enc_b'])
+        
+        self.write_word(bus, PIN_LEFT_A, pins['left_a'])
+        self.write_word(bus, PIN_LEFT_B, pins['left_b'])
+        self.write_word(bus, PIN_LEFT_PWM, pins['left_pwm'])
+        self.write_word(bus, PIN_LEFT_ENC_A, pins['left_enc_a'])
+        self.write_word(bus, PIN_LEFT_ENC_B, pins['left_enc_b'])
 
     def set_right(self, direction, speed):
-        write_word(self.bus, MOTOR_RIGHT_DIR, direction)
-        write_word(self.bus, MOTOR_RIGHT_SPEED, speed)
-        write_word(self.bus, MOTOR_RIGHT_GO, 1)
+        self.write_word(self.bus, MOTOR_RIGHT_DIR, direction)
+        self.write_word(self.bus, MOTOR_RIGHT_SPEED, speed)
+        self.write_word(self.bus, MOTOR_RIGHT_GO, 1)
 
     def set_left(self, direction, speed):
-        write_word(self.bus, MOTOR_LEFT_DIR, direction)
-        write_word(self.bus, MOTOR_LEFT_SPEED, speed)
-        write_word(self.bus, MOTOR_LEFT_GO, GO)
+        self.write_word(self.bus, MOTOR_LEFT_DIR, direction)
+        self.write_word(self.bus, MOTOR_LEFT_SPEED, speed)
+        self.write_word(self.bus, MOTOR_LEFT_GO, GO)
     
     def set_both(self, direction, speed):
         self.set_left(direction, speed)
         self.set_right(direction, speed)
 
     def stop_right(self):
-        write_word(self.bus, MOTOR_RIGHT_GO, STOP)
+        self.write_word(self.bus, MOTOR_RIGHT_GO, STOP)
     
     def stop_left(self):
-        write_word(self.bus, MOTOR_LEFT_GO, STOP)
+        self.write_word(self.bus, MOTOR_LEFT_GO, STOP)
 
     def stop_both(self):
         self.stop_left()
@@ -93,7 +94,7 @@ class motorhead():
         if right_pwm > 250: right_pwm = 250
         if left_pwm > 250: left_pwm = 250
 
-        set_right(self, CW, right_pwm)
-        set_left(self, CW, left_pwm)
+        self.set_right(self, CW, right_pwm)
+        self.set_left(self, CW, left_pwm)
 
         logg(__name__, "DEBUG", "updating motor values [angular: {}] [linear: {}] [right_pwm: {}] [left_pwm: {}]".format(angular, linear, right_pwm, left_pwm))
