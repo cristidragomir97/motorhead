@@ -28,20 +28,18 @@ MOTOR_LEFT_GO = 0x22
 ADDRESS = 0x76
 
 
-
 class motorhead():
      
-    def __init__(self, radius, flip):
+    def __init__(self, radius, flip, pins):
         self.radius = radius
         self.flip = flip
         
         try:
             self.bus = smbus2.SMBus(1)
             self.init_pins(self.bus, pins)
-   
             logg(__name__, "INFO", "Motors successfullly initialised")
         except Exception as e:
-            logg(__name__, "ERROR", "Exception initialisitng Motorhead Motor Driver {}".format)
+            logg(__name__, "ERROR", "Exception initialisitng Motorhead Motor Driver {}".format(e))
 
     def write_word(self, bus, reg, data):
         bus.write_word_data(ADDRESS, reg, data)
