@@ -55,7 +55,7 @@ class motorhead():
    
             logg(__name__, "INFO", "Motors successfullly initialised")
         except Exception as e:
-            logg(__name__, "ERROR", "Exception initialisitng Motorhead Motor Driver {e}")
+            logg(__name__, "ERROR", "Exception initialisitng Motorhead Motor Driver {}".format(e))
 
 
     def set_right(self, direction, speed):
