@@ -94,7 +94,7 @@ class motorhead():
         if right_pwm > 250: right_pwm = 250
         if left_pwm > 250: left_pwm = 250
 
-        self.set_right(CW, right_pwm)
-        self.set_left(CW, left_pwm)
+        self.set_right(CW, int(right_pwm))
+        self.set_left(CW, int(left_pwm))
 
         logg(__name__, "DEBUG", "updating motor values [angular: {}] [linear: {}] [right_pwm: {}] [left_pwm: {}]".format(angular, linear, right_pwm, left_pwm))
