@@ -33,18 +33,14 @@ class motorhead():
     def __init__(self, radius, flip, pins):
         self.radius = radius
         self.flip = flip
-        
-        self.bus = smbus2.SMBus(1)
-        self.init_pins(pins)
+    
 
-        '''
-             try:
+        try:
          
             logg(__name__, "INFO", "Motors successfullly initialised")
         except Exception as e:
             logg(__name__, "ERROR", "Exception initialisitng Motorhead Motor Driver {}".format(e))
         
-        '''
    
 
     def write_word(self, reg, data):
